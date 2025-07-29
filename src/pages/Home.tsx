@@ -156,11 +156,18 @@ const Home = () => {
 
   const fetchPriceData = async () => {
     try {
+      // Get today's date in UTC at 00:00:00
+      const today = new Date();
+      today.setUTCHours(0, 0, 0, 0);
+      const startOfToday = today.toISOString();
+      
       const ordersQuery = query(
         collection(db, "sellOrders"),
         where("productType", "==", selectedProductType),
-        where("status", "==", "active")
+        where("status", "==", "active"),
+        where("createdAt", ">=", startOfToday) // Only today's orders
       );
+      
       const ordersSnapshot = await getDocs(ordersQuery);
       const ordersData = ordersSnapshot.docs.map(doc => doc.data() as Order);
 
@@ -200,6 +207,10 @@ const Home = () => {
     }
   };
 
+  const getArabicUnit = (unit: "kg" | "ton") => {
+    return unit === "kg" ? "كيلو" : "طن";
+  };
+
   const SliderImages = [
     "/api/placeholder/800/300",
     "/api/placeholder/800/300",
@@ -237,7 +248,7 @@ const Home = () => {
           </Badge>
         </div>
         <p className="text-sm text-muted-foreground mb-2">
-          {order.quantity} {order.unit === "kg" ? "كيلو" : "طن"} - {order.pricePerUnit} جنيه
+          {order.quantity} {getArabicUnit(order.unit)} - {order.pricePerUnit} جنيه
         </p>
         {order.userName && (
           <p className="text-sm text-muted-foreground">
@@ -297,7 +308,7 @@ const Home = () => {
                   متوسط أسعار المنتجات اليوم
                 </CardTitle>
                 <CardDescription>
-                  الأسعار محسوبة من متوسط عروض المزارعين في السوق
+                  الأسعار محسوبة من عروض المزارعين اليوم فقط
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -339,7 +350,7 @@ const Home = () => {
                     <h3 className="font-semibold text-lg mb-2">{selectedProduct}</h3>
                     <p className="text-2xl font-bold text-primary">
                       {priceData.find(p => p.productName === selectedProduct)?.averagePrice || 0} جنيه / 
-                      {priceData.find(p => p.productName === selectedProduct)?.unit || 'كيلو'}
+                      {getArabicUnit(priceData.find(p => p.productName === selectedProduct)?.unit || 'kg')}
                     </p>
                     <p className="text-sm text-muted-foreground">
                       محسوب من {priceData.find(p => p.productName === selectedProduct)?.count || 0} عرض
@@ -365,7 +376,7 @@ const Home = () => {
                             <TableCell className="text-primary font-semibold">
                               {item.averagePrice} جنيه
                             </TableCell>
-                            <TableCell>{item.unit === "kg" ? "كيلو" : "طن"}</TableCell>
+                            <TableCell>{getArabicUnit(item.unit)}</TableCell>
                             <TableCell>{item.count}</TableCell>
                           </TableRow>
                         ))}
@@ -373,7 +384,7 @@ const Home = () => {
                     </Table>
                     {priceData.length === 0 && (
                       <div className="text-center py-4 text-muted-foreground">
-                        لا توجد بيانات أسعار متاحة حالياً
+                        لا توجد بيانات أسعار متاحة لليوم الحالي
                       </div>
                     )}
                   </div>
