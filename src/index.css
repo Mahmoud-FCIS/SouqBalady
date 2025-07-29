@@ -1,0 +1,146 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Souq Balady Colors - Light Theme */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Green - #4CAF50 */
+    --primary: 122 39% 49%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Yellow - #FFEB3B */
+    --secondary: 54 100% 62%;
+    --secondary-foreground: 0 0% 0%;
+
+    /* Orange - #FFA726 */
+    --tertiary: 36 100% 57%;
+    --tertiary-foreground: 0 0% 0%;
+
+    /* Blue - #81D4FA */
+    --accent: 199 94% 74%;
+    --accent-foreground: 0 0% 0%;
+
+    /* Brown - #8D6E63 */
+    --brown: 17 24% 47%;
+    --brown-foreground: 0 0% 100%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 122 39% 49%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 122 39% 96%;
+    --sidebar-foreground: 122 39% 20%;
+    --sidebar-primary: 122 39% 49%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 122 39% 90%;
+    --sidebar-accent-foreground: 122 39% 20%;
+    --sidebar-border: 122 39% 85%;
+    --sidebar-ring: 122 39% 60%;
+  }
+
+  .dark {
+    /* Souq Balady Colors - Dark Theme */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 15%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Green - #4CAF50 with increased saturation for dark mode */
+    --primary: 122 59% 49%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Yellow - #FFEB3B darkened for dark mode */
+    --secondary: 54 80% 55%;
+    --secondary-foreground: 0 0% 0%;
+
+    /* Orange - #FFA726 darkened for dark mode */
+    --tertiary: 36 90% 50%;
+    --tertiary-foreground: 0 0% 0%;
+
+    /* Blue - #81D4FA darkened for dark mode */
+    --accent: 199 80% 60%;
+    --accent-foreground: 0 0% 0%;
+
+    /* Brown - #8D6E63 lightened for dark mode */
+    --brown: 17 24% 55%;
+    --brown-foreground: 0 0% 100%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 122 59% 49%;
+
+    --sidebar-background: 122 20% 20%;
+    --sidebar-foreground: 122 30% 90%;
+    --sidebar-primary: 122 59% 49%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 122 15% 30%;
+    --sidebar-accent-foreground: 122 30% 90%;
+    --sidebar-border: 122 15% 25%;
+    --sidebar-ring: 122 59% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Cairo', 'Tajawal', sans-serif;
+    direction: rtl;
+  }
+
+  /* Custom reusable animations and effects */
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .hover-pulse {
+    @apply transition-opacity duration-200 hover:opacity-80;
+  }
+
+  .animated-underline {
+    @apply relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:right-0 after:bg-primary after:origin-bottom-left after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-right;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1;
+  }
+  
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+}
